@@ -1,0 +1,53 @@
+<div class="calculator-container">
+    <form [formGroup]="calculatorForm" (ngSubmit)="onSubmit()" class="calculator">
+        <div class="display">
+            <div class="current-operation" *ngIf="currentOperation">
+                {{ currentOperation }}
+            </div>
+            <div class="result" *ngIf="result !== null">
+                Result: {{ result }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="firstOperand">First Operand</label>
+            <input type="text" id="firstOperand" formControlName="firstOperand" class="clr-input">
+            <div *ngIf="calculatorForm.get('firstOperand')?.invalid && calculatorForm.get('firstOperand')?.touched"
+                 class="error">
+                Please enter a valid number
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="secondOperand">Second Operand</label>
+            <input type="text" id="secondOperand" formControlName="secondOperand" class="clr-input">
+            <div *ngIf="calculatorForm.get('secondOperand')?.invalid && calculatorForm.get('secondOperand')?.touched"
+                 class="error">
+                Please enter a valid number
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="operation">Operation</label>
+            <div class="btn-group">
+                <button type="button" class="btn" [class.btn-primary]="calculatorForm.get('operation')?.value === Operation.ADD"
+                        (click)="calculatorForm.patchValue({ operation: Operation.ADD })">+
+                </button>
+                <button type="button" class="btn" [class.btn-primary]="calculatorForm.get('operation')?.value === Operation.SUBTRACT"
+                        (click)="calculatorForm.patchValue({ operation: Operation.SUBTRACT })">-
+                </button>
+                <button type="button" class="btn" [class.btn-primary]="calculatorForm.get('operation')?.value === Operation.MULTIPLY"
+                        (click)="calculatorForm.patchValue({ operation: Operation.MULTIPLY })">×
+                </button>
+                <button type="button" class="btn" [class.btn-primary]="calculatorForm.get('operation')?.value === Operation.DIVIDE"
+                        (click)="calculatorForm.patchValue({ operation: Operation.DIVIDE })">÷
+                </button>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary" [disabled]="!calculatorForm.valid">Calculate</button>
+            <button type="button" class="btn" (click)="clear()">Clear</button>
+        </div>
+    </form>
+</div>

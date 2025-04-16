@@ -1,0 +1,81 @@
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ClarityModule } from '@clr/angular';
+import { CalculationService } from '../../services/calculation.service';
+import { Operation } from '../../models/operation.enum';
+
+@Component({
+  selector: 'app-input',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ClarityModule],
+  templateUrl: './input.component.html',
+  styleUrl: './input.component.css'
+})
+export class InputComponent {
+  calculatorForm: FormGroup;
+  currentOperation: string = '';
+  result: number | null = null;
+  Operation = Operation; // Make enum available in template
+
+  constructor(
+    private fb: FormBuilder,
+    private calculationService: CalculationService,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.calculatorForm = this.fb.group({
+      firstOperand: ['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      secondOperand: ['', [Validators.required, Validators.pattern(/^-?\d*\.?\d+$/)]],
+      operation: ['', Validators.required]
+    });
+
+    this.calculatorForm.valueChanges.subscribe(values => {
+      if (values.firstOperand && values.operation && values.secondOperand) {
+        this.currentOperation = `${values.firstOperand} ${this.getOperationSymbol(values.operation)} ${values.secondOperand}`;
+      } else {
+        this.currentOperation = '';
+      }
+    });
+  }
+
+  private getOperationSymbol(operation: Operation): string {
+    switch (operation) {
+      case Operation.ADD:
+        return '+';
+      case Operation.SUBTRACT:
+        return '-';
+      case Operation.MULTIPLY:
+        return '×';
+      case Operation.DIVIDE:
+        return '÷';
+      default:
+        return '';
+    }
+  }
+
+  onSubmit(): void {
+    if (this.calculatorForm.valid) {
+      const { firstOperand, secondOperand, operation } = this.calculatorForm.value;
+      
+      this.calculationService.calculate(
+        parseFloat(firstOperand),
+        parseFloat(secondOperand),
+        operation
+      ).subscribe({
+        next: (result) => {
+          this.result = result;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Calculation error:', error);
+        }
+      });
+    }
+  }
+
+  clear(): void {
+    this.calculatorForm.reset();
+    this.currentOperation = '';
+    this.result = null;
+  }
+}

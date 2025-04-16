@@ -5,6 +5,7 @@ import {ClarityModule} from "@clr/angular";
 import {AppRoutingModule} from "./app-routing.module";
 
 import {AppComponent} from "./app.component";
+import {InputComponent} from './components/input/input.component';
 
 @NgModule({
   imports: [
@@ -12,8 +13,9 @@ import {AppComponent} from "./app.component";
     AppRoutingModule,
     BrowserAnimationsModule,
     ClarityModule,
+    AppComponent,
+    InputComponent
   ],
-  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
