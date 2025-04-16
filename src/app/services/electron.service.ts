@@ -6,7 +6,7 @@ import { Calculation } from '../models/calculation.model';
 declare global {
   interface Window {
     electron?: {
-      send: (channel: string, data: any) => void;
+      send: (channel: string, data?: any) => void;
       once: (channel: string, callback: Function) => void;
     };
   }
@@ -22,8 +22,8 @@ export class ElectronService {
     this.isElectron = window.electron !== undefined;
   }
 
-  calculate(calculation: Calculation): Observable<number> {
-    return new Observable<number>(observer => {
+  calculate(calculation: Calculation): Observable<{ result: number, history: Calculation[] }> {
+    return new Observable<{ result: number, history: Calculation[] }>(observer => {
       if (!this.isElectron) {
         let result: number;
         switch (calculation.operation) {
@@ -42,17 +42,34 @@ export class ElectronService {
           default:
             result = NaN;
         }
-        observer.next(result);
+        observer.next({ result, history: [] });
         observer.complete();
         return;
       }
 
-      window.electron!.once('calculation-result', (result: number) => {
-        observer.next(result);
+      window.electron!.once('calculation-result', (response: { result: number, history: Calculation[] }) => {
+        // Ensure history is always an array
+        const safeResponse = {
+          result: response.result,
+          history: Array.isArray(response.history) ? response.history : []
+        };
+        observer.next(safeResponse);
         observer.complete();
       });
 
       window.electron!.send('calculate', calculation);
     });
+  }
+
+  send(channel: string, data?: any): void {
+    if (this.isElectron) {
+      window.electron!.send(channel, data);
+    }
+  }
+
+  once(channel: string, callback: Function): void {
+    if (this.isElectron) {
+      window.electron!.once(channel, callback);
+    }
   }
 }

@@ -1,0 +1,31 @@
+<div class="history-sidebar">
+  <h4 class="history-title">History</h4>
+  <div class="history-list">
+    <div *ngFor="let item of historyItems" class="history-item">
+      <div class="operation-text">
+        {{ item.firstOperand }} {{ getOperationSymbol(item.operation) }} {{ item.secondOperand }} = {{ item.result }}
+      </div>
+      <div class="timestamp">{{ item.timestamp | date:'shortTime' }}</div>
+      <button class="btn btn-sm btn-link delete-btn" (click)="confirmDelete(item)">
+        Delete
+      </button>
+    </div>
+    <div *ngIf="historyItems.length === 0" class="empty-history">
+      No calculations yet
+    </div>
+  </div>
+</div>
+
+<clr-modal [(clrModalOpen)]="deleteModalOpen">
+  <h3 class="modal-title">Confirm Delete</h3>
+  <div class="modal-body">
+    <p>Are you sure you want to delete this calculation?</p>
+    <div class="operation-to-delete" *ngIf="itemToDelete">
+      {{ itemToDelete.firstOperand }} {{ getOperationSymbol(itemToDelete.operation) }} {{ itemToDelete.secondOperand }} = {{ itemToDelete.result }}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="cancelDelete()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="deleteHistoryItem()">Delete</button>
+  </div>
+</clr-modal> 

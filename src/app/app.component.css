@@ -1,7 +1,57 @@
+:host {
+  display: block;
+  height: 100vh;
+  background-color: var(--clr-color-neutral-1000);
+}
+
 .app-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  background-color: var(--clr-color-action-800);
+  color: var(--clr-color-neutral-0);
+  height: 48px;
+  display: flex;
   align-items: center;
-  min-height: 100vh;
-  background-color: #fafafa;
+  padding: 0 1rem;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.branding .title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--clr-color-neutral-0);
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 48px);
+  overflow: hidden;
+}
+
+.calculator-container {
+  flex: 1;
+  background-color: var(--clr-color-neutral-1000);
+}
+
+.history-container {
+  width: 300px;
+  background-color: var(--clr-color-neutral-900);
+  border-left: 1px solid var(--clr-color-neutral-800);
 }

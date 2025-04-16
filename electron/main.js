@@ -3,6 +3,7 @@ const url = require("url");
 const path = require("path");
 
 let mainWindow;
+let calculationHistory = [];
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -42,6 +43,7 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit();
 });
 
+// Handle calculation requests
 ipcMain.on('calculate', (event, calculation) => {
   let result;
   switch (calculation.operation) {
@@ -61,5 +63,30 @@ ipcMain.on('calculate', (event, calculation) => {
       result = NaN;
   }
 
-  event.reply('calculation-result', result);
+  // Add to history
+  const historyItem = {
+    id: Date.now().toString(),
+    firstOperand: calculation.firstOperand,
+    secondOperand: calculation.secondOperand,
+    operation: calculation.operation,
+    result: result,
+    timestamp: new Date()
+  };
+  calculationHistory.push(historyItem);
+
+  // Send both result and history
+  event.reply('calculation-result', {
+    result: result,
+    history: calculationHistory
+  });
+});
+
+// Handle history requests
+ipcMain.on('get-history', (event) => {
+  event.reply('get-history-response', calculationHistory);
+});
+
+ipcMain.on('delete-history-item', (event, request) => {
+  calculationHistory = calculationHistory.filter(item => item.id !== request.id);
+  event.reply('delete-history-response');
 });

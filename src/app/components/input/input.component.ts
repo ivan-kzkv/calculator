@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
@@ -10,13 +10,16 @@ import { Operation } from '../../models/operation.enum';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ClarityModule],
   templateUrl: './input.component.html',
-  styleUrl: './input.component.css'
+  styleUrls: ['./input.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class InputComponent {
   calculatorForm: FormGroup;
   currentOperation: string = '';
   result: number | null = null;
-  Operation = Operation; // Make enum available in template
+  Operation = Operation;
+
+  @Output() calculationComplete = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -56,7 +59,7 @@ export class InputComponent {
   onSubmit(): void {
     if (this.calculatorForm.valid) {
       const { firstOperand, secondOperand, operation } = this.calculatorForm.value;
-      
+
       this.calculationService.calculate(
         parseFloat(firstOperand),
         parseFloat(secondOperand),
@@ -65,9 +68,12 @@ export class InputComponent {
         next: (result) => {
           this.result = result;
           this.cdr.detectChanges();
+          this.calculationComplete.emit();
         },
         error: (error) => {
           console.error('Calculation error:', error);
+          this.result = null;
+          this.cdr.detectChanges();
         }
       });
     }
@@ -77,5 +83,6 @@ export class InputComponent {
     this.calculatorForm.reset();
     this.currentOperation = '';
     this.result = null;
+    this.cdr.detectChanges();
   }
 }

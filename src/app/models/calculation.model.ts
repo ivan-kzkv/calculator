@@ -5,6 +5,6 @@ export interface Calculation {
   firstOperand: number;
   secondOperand: number;
   operation: Operation;
-  timestamp: Date;
   result?: number;
+  timestamp?: Date;
 }
