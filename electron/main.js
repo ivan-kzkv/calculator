@@ -12,7 +12,9 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      autoplayPolicy: 'no-user-gesture-required',
+      disableBlinkFeatures: 'Autofill'
     }
   });
 
@@ -23,8 +25,8 @@ function createWindow() {
       slashes: true
     })
   );
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // Отключаем DevTools
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function () {
     mainWindow = null;

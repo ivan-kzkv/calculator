@@ -1,7 +1,18 @@
-import { platformBrowser } from '@angular/platform-browser';
-import { AppModule } from './app/app.module';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
 
-platformBrowser().bootstrapModule(AppModule, {
-  ngZoneEventCoalescing: true,
-})
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAnimations(),
+    provideRouter([])
+  ]
+}).catch(err => console.error(err));
+
+// Отключаем DevTools при запуске
+if (window.console) {
+  window.console.log = function() {};
+  window.console.error = function() {};
+  window.console.warn = function() {};
+}
