@@ -11,7 +11,7 @@ This project is a simple calculator desktop application built with **Angular** a
 - [HTML & CSS] – UI structure and styling
 - [UI Components](https://clarity.design/) - components for build ui part
 
-  ## Application Structure
+## Application Structure
 
 The application consists of two main Angular components:
 
@@ -20,6 +20,7 @@ The application consists of two main Angular components:
 - **HistoryComponent** – This component maintains and displays a list of previously calculated expressions along with their results. It allows users to review their past calculations during the current session.
 
 These components are organized to demonstrate separation of concerns and component-based architecture in Angular. State management is handled locally, and communication between components is achieved using Angular services.
+
 ## Features – InputComponent
 
 The `InputComponent` is designed to collect user input for performing basic arithmetic operations. It includes the following features:
@@ -37,7 +38,8 @@ The `InputComponent` is designed to collect user input for performing basic arit
   - It then communicates with the **Electron main process** using IPC (Inter-Process Communication).
   - The actual calculation is performed on the Electron side, which simulates how a real desktop backend might work.
   - The result is returned back to the Angular component and displayed, while also being sent to the history list.
-**## Features – HistoryComponent
+
+## Features – HistoryComponent
 
 The `HistoryComponent` is responsible for displaying a list of all previously performed calculations and managing their removal. Its main features include:
 
@@ -68,3 +70,4 @@ This project is intended for educational use, and each student should follow the
 - **Clean Commit History** – The branch should contain only the necessary files related to the calculator application. Unrelated system files, temporary files, or `node_modules` must **not** be included in commits.
 - **Project Structure Discipline** – Students are encouraged to maintain a clear and modular structure, separating components, services, assets, and configuration files logically.
 - **Regular Commits** – Students should commit their progress incrementally with meaningful commit messages that describe the changes made.
+

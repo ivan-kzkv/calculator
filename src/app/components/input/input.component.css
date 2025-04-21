@@ -1,0 +1,173 @@
+app-input .calculator-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  background-color: var(--clr-color-neutral-1000);
+}
+
+app-input .calculator {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: var(--clr-color-neutral-1000);
+}
+
+app-input .display {
+  background-color: var(--clr-color-neutral-900);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  min-height: 100px;
+}
+
+app-input .current-operation {
+  color: var(--clr-color-neutral-200);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+app-input .result {
+  color: var(--clr-color-neutral-0);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+app-input .form-group {
+  margin-bottom: 2rem;
+}
+
+app-input .form-group label {
+  color: var(--clr-color-neutral-100);
+  margin-bottom: 0.75rem;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+app-input .btn-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+app-input .btn-group .btn {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-radius: 4px;
+}
+
+app-input .button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+app-input .button-group .btn {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 4px;
+}
+
+app-input .clr-input {
+  width: 100%;
+  background-color: var(--clr-color-neutral-900);
+  border: 2px solid var(--clr-color-neutral-600);
+  border-radius: 4px;
+  color: var(--clr-color-neutral-0);
+  font-size: 1.2rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+app-input .clr-input:focus {
+  border-color: var(--clr-color-action-400);
+  box-shadow: 0 0 0 2px rgba(var(--clr-color-action-400-rgb), 0.25);
+  background-color: var(--clr-color-neutral-800);
+}
+
+app-input .clr-input::placeholder {
+  color: var(--clr-color-neutral-400);
+}
+
+app-input .btn {
+  background-color: var(--clr-color-neutral-700);
+  color: var(--clr-color-neutral-0);
+  border: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+app-input .btn:hover {
+  background-color: var(--clr-color-neutral-600);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+app-input .btn.btn-primary {
+  background-color: var(--clr-color-action-500);
+}
+
+app-input .btn.btn-primary:hover {
+  background-color: var(--clr-color-action-400);
+}
+
+app-input .btn.btn-primary:active {
+  background-color: var(--clr-color-action-600);
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+app-input .btn:active {
+  background-color: var(--clr-color-neutral-800);
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+app-input .error {
+  color: var(--clr-color-danger-300);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.error-message {
+  color: var(--clr-color-danger-500);
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  app-input .calculator-container {
+    padding: 1rem;
+  }
+
+  app-input .calculator {
+    padding: 1rem;
+  }
+
+  app-input .display {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  app-input .current-operation {
+    font-size: 1.25rem;
+  }
+
+  app-input .result {
+    font-size: 2rem;
+  }
+
+  app-input .btn-group {
+    gap: 0.25rem;
+  }
+
+  app-input .btn-group .btn {
+    padding: 0.75rem;
+    font-size: 1.1rem;
+  }
+}

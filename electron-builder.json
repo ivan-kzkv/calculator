@@ -1,0 +1,15 @@
+{
+    "appId": "com.calculator.app",
+    "files": ["dist-electron", "dist-app"],
+    "icon": "./public/icon.png",
+    "mac": {
+        "target": "dmg"
+    },
+    "linux": {
+        "target": ["AppImage", "deb", "rpm", "snap"],
+        "category": "Utility"
+    },
+    "win": {
+        "target": ["portable", "msi"]
+    }
+}
