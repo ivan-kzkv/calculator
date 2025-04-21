@@ -8,3 +8,9 @@ export interface Calculation {
   result?: number;
   timestamp?: Date;
 }
+
+export interface CalculationResponse {
+  result: number | null;
+  error?: string;
+  history: Calculation[];
+}

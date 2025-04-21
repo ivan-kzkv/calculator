@@ -134,6 +134,12 @@ app-input .error {
   margin-top: 0.5rem;
 }
 
+.error-message {
+  color: var(--clr-color-danger-500);
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
 @media (max-width: 768px) {
   app-input .calculator-container {
     padding: 1rem;

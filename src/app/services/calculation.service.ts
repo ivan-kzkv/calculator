@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
 import { Operation } from '../models/operation.enum';
-import { Calculation } from '../models/calculation.model';
+import { Calculation, CalculationResponse } from '../models/calculation.model';
 import { ElectronService } from './electron.service';
 import { HistoryService } from './history.service';
 
@@ -14,7 +14,7 @@ export class CalculationService {
     private historyService: HistoryService
   ) {}
 
-  calculate(firstOperand: number, secondOperand: number, operation: Operation): Observable<number> {
+  calculate(firstOperand: number, secondOperand: number, operation: Operation): Observable<CalculationResponse> {
     const calculation: Calculation = {
       firstOperand,
       secondOperand,
@@ -27,8 +27,7 @@ export class CalculationService {
         if (response && response.history) {
           this.historyService.updateHistory(response.history);
         }
-      }),
-      map(response => response.result)
+      })
     );
   }
 }

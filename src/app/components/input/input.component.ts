@@ -17,6 +17,7 @@ export class InputComponent {
   calculatorForm: FormGroup;
   currentOperation: string = '';
   result: number | null = null;
+  errorMessage: string | null = null;
   Operation = Operation;
 
   @Output() calculationComplete = new EventEmitter<void>();
@@ -59,19 +60,28 @@ export class InputComponent {
   onSubmit(): void {
     if (this.calculatorForm.valid) {
       const { firstOperand, secondOperand, operation } = this.calculatorForm.value;
+      this.errorMessage = null;
+      this.result = null;
 
       this.calculationService.calculate(
         parseFloat(firstOperand),
         parseFloat(secondOperand),
         operation
       ).subscribe({
-        next: (result) => {
-          this.result = result;
+        next: (response) => {
+          if (response.error) {
+            this.errorMessage = response.error;
+            this.result = null;
+          } else {
+            this.result = response.result;
+            this.errorMessage = null;
+          }
           this.cdr.detectChanges();
           this.calculationComplete.emit();
         },
         error: (error) => {
           console.error('Calculation error:', error);
+          this.errorMessage = error.message || 'An error occurred during calculation';
           this.result = null;
           this.cdr.detectChanges();
         }
@@ -83,6 +93,7 @@ export class InputComponent {
     this.calculatorForm.reset();
     this.currentOperation = '';
     this.result = null;
+    this.errorMessage = null;
     this.cdr.detectChanges();
   }
 }

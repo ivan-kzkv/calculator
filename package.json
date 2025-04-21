@@ -1,15 +1,19 @@
 {
   "name": "simple-calculator",
   "version": "0.0.0",
-  "main": "electron/main.js",
+  "main": "./dist-electron/electron/main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "transpile:electron": "tsc --project src/electron/tsconfig.json",
     "electron": "electron .",
-    "electron-build": "ng build --base-href ./ && electron ."
+    "electron-build": "ng build --base-href ./ && electron .",
+    "build:win": "npm run build && npm run transpile:electron && electron-builder --win",
+    "build:mac": "npm run build && npm run transpile:electron && electron-builder --mac",
+    "build:linux": "npm run build && npm run transpile:electron && electron-builder --linux"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +38,7 @@
     "@angular/compiler-cli": "^19.2.0",
     "@types/jasmine": "~5.1.0",
     "electron": "^35.1.5",
+    "electron-builder": "^26.0.12",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -41,5 +46,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.7.2"
+  },
+  "build": {
   }
 }
